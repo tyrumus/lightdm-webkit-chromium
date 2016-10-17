@@ -1,2 +1,1 @@
-# lightdm-webkit-chromium
-A ChromeOS-style LightDM Webkit Greeter Theme
+# A ChromeOS-style LightDM Webkit Greeter Theme
