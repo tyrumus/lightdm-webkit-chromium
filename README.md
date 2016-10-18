@@ -12,4 +12,5 @@
 
 ### Configuration
 You can change the background by replacing the `wallpaper.jpg` with your own photo
-*NOTE: IT MUST BE THE SAME FILE NAME*
+
+**NOTE: IT MUST BE THE SAME FILE NAME**
