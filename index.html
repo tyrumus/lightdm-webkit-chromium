@@ -1,0 +1,39 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="assets/main.css">
+    <title>ChromiumOS Login</title>
+</head>
+<body onclick="document.getElementById('pass').focus();">
+    <div class="fade-cover" id="overlay"></div>
+    <div class="container">
+    <div class="card" id="card">
+        <img src="assets/profile.png" class="profile-img">
+        <form>
+            <input id="pass" placeholder="Password" type="password" tabindex="1" class="password-box" autofocus>
+            <button type="submit" tabindex="-1" style="position:absolute;left:-9999px;width:1px;height:1px;">
+        </form>
+    </div>
+    </div>
+    <div class="bottom-bar">
+        <div class="action shutdown" onclick="shutdown();"><i></i>Shut down</div>
+        <div class="action reboot" onclick="restart();"><i></i>Restart</div>
+    </div>
+    <script src="assets/mock.js"></script>
+    <script src="assets/jquery-2.1.0.min.js"></script>
+    <script src="assets/login.js"></script>
+    <script src="assets/clock.js"></script>
+    <script type="text/javascript">
+        function shutdown(){
+            $("#overlay").css('visibility', 'visible');
+            $("#overlay").animate({opacity: "1"},1500);
+            setTimeout(function(){lightdm.shutdown();}, 1500);
+        }
+        function restart(){
+            $("#overlay").css('visibility', 'visible');
+            $("#overlay").animate({opacity: '1'},1500);
+            setTimeout(function(){lightdm.restart();}, 1500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+[theme]
+name=lightdm-webkit-chromium
+description=A ChromeOS-style Greeter Theme
+engine=lightdm-webkit-greeter
+url=index.html
