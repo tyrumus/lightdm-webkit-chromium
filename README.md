@@ -3,6 +3,7 @@
 ### TODO
 - Javascript changes page for multiple users
 - Add widget in bottom-right corner
+- Add arrow to user card on hover to change session
 
 ### Install on Ubuntu (though this will work on an platform that supports `lightdm-webkit-greeter`)
 1. Install lightdm and the greeter by `sudo apt-get install lightdm lightdm-webkit-greeter`
