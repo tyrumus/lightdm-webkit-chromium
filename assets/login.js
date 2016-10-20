@@ -3,7 +3,6 @@ var login = (function (lightdm, $) {
     var password = null
     var $user = $('#user');
     var $pass = $('#pass');
-    var card = document.getElementById("card");
     // private functions
     function animShake() {
         console.log('triggered');
@@ -13,6 +12,10 @@ var login = (function (lightdm, $) {
         $("#card").animate({left: '5px'}, 75);
         $("#card").animate({left: '-5px'}, 75);
         $("#card").animate({left: '0px'}, 75);
+    }
+    function animFade() {
+        $("#bloverlay").css('visibility', 'visible');
+        $("#bloverlay").animate({opacity: "1"}, 250);
     }
     var setup_users_list = function () {
         var $list = $user;
@@ -66,11 +69,11 @@ var login = (function (lightdm, $) {
     };
     window.authentication_complete = function () {
         if (lightdm.is_authenticated) {
-            show_prompt('Logged in');
-            lightdm.login(
-                lightdm.authentication_user,
-                lightdm.default_session
-            );
+            animFade();
+            setTimeout(function(){
+                show_prompt('Logged in');
+                lightdm.login(lightdm.authentication_user,lightdm.default_session);
+            }, 350);
         }else{
             animShake();
         }
