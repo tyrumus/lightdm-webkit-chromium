@@ -23,21 +23,52 @@ body {
     z-index: -1;
 }
 .container {
+    text-align: center;
     position: relative;
     height: 100%;
     width: 100%;
 }
 .card {
+    cursor: pointer;
     overflow: hidden;
     padding: 10px;
     width: 160px;
     height: 190px;
     background-color: #fff;
+    display: inline-block;
     position: relative;
-    margin: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
     top: 30%;
     border-radius: 2px;
-    box-shadow: 0px 0px 30px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+}
+.submit-button {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+}
+@keyframes selectShadow {
+    0% {box-shadow: 0px 0px 5px rgba(0,0,0,0.5);}
+    100% {box-shadow: 0px 0px 30px rgba(0,0,0,0.5);}
+}
+.select-shadow {
+    animation-name: selectShadow;
+    animation-duration: 0.2s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+}
+@keyframes deselectShadow {
+    0% {box-shadow: 0px 0px 30px rgba(0,0,0,0.5)}
+    100% {box-shadow: 0px 0px 5px rgba(0,0,0,0.5)}
+}
+.deselect-shadow {
+    animation-name: deselectShadow;
+    animation-duration: 0.2s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
 }
 .profile-img {
     width: 160px;
