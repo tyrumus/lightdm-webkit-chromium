@@ -1,6 +1,7 @@
 # A ChromeOS-style LightDM Webkit Greeter Theme
 
 ### TODO
+- Profile cards that aren't selected show display name
 - Add widget in bottom-right corner
 - Add arrow to user card on hover to change session
 
