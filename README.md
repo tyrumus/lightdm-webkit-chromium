@@ -1,7 +1,6 @@
 # A ChromeOS-style LightDM Webkit Greeter Theme
 
 ### TODO
-- Javascript changes page for multiple users
 - Add widget in bottom-right corner
 - Add arrow to user card on hover to change session
 
