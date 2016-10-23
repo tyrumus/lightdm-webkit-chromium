@@ -82,6 +82,18 @@ body {
     font-size: 14px;
     font-family: Roboto Regular;
 }
+.name-box {
+    outline: none;
+    color: #555;
+    width: 160px;
+    height: 25px;
+    font-size: 18px;
+    margin-top: 6px;
+    font-family: Roboto Regular;
+    overflow: hidden;
+    overflow-x: hidden;
+    text-align: center;
+}
 .action {
     cursor: pointer;
     float: left;

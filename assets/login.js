@@ -1,9 +1,16 @@
 var login = (function (lightdm, $) {
     var selected_user = null;
+    var selected_user_id = null;
     var password = null;
 
 
     // animation functions
+    function addForm(user){
+        $("#"+user+"-card").append("<form id='"+user+"-form'><input id='"+user+"-pass' placeholder='Password' type='password' tabindex='1' class='password-box'><button type='submit' tabindex='-1' class='submit-button'></form>");
+    }
+    function addName(user, name){
+        $("#"+user+"-card").append("<div class='name-box' id='"+user+"-name'>"+name+"</div>");
+    }
     function animLoginFailure(username) { // shake focused element on login failure
         document.getElementById(username+"-pass").value = "";
         $("#"+username+"-card").animate({left: '5px'}, 75);
@@ -20,32 +27,36 @@ var login = (function (lightdm, $) {
 		$("#bloverlay").animate({opacity: "0"}, 250);
 		setTimeout(function(){$("#bloverlay").css('visibility', 'hidden');}, 250);
 	}
-    function animUnfocus(id){ // unfocus element when something else is selected
-        $("#"+id).addClass('deselect-shadow');
-        $("#"+id).on('animationend', function(){
-            document.getElementById(id).style.boxShadow = "0px 0px 5px rgba(0,0,0,0.5)";
-            $("#"+id).removeClass('deselect-shadow');
+    function animUnfocus(user,id){ // unfocus element when something else is selected
+        $("#"+user+"-card").addClass('deselect-shadow');
+        $("#"+user+"-card").on('animationend', function(){
+            document.getElementById(user+"-card").style.boxShadow = "0px 0px 5px rgba(0,0,0,0.5)";
+            $("#"+user+"-card").removeClass('deselect-shadow');
         });
+        $("#"+user+"-form").remove();
+        addName(user,lightdm.users[id].display_name);
     }
-	function animFocus(id){ // focus element on click
-        $("#"+id).addClass('select-shadow');
-        $("#"+id).on('animationend', function(){
-            document.getElementById(id).style.boxShadow = "0px 0px 30px rgba(0,0,0,0.5)";
-            $("#"+id).removeClass('select-shadow');
+	function animFocus(user){ // focus element on click
+        $("#"+user+"-card").addClass('select-shadow');
+        $("#"+user+"-card").on('animationend', function(){
+            document.getElementById(user+"-card").style.boxShadow = "0px 0px 30px rgba(0,0,0,0.5)";
+            $("#"+user+"-card").removeClass('select-shadow');
         });
+        $("#"+user+"-name").remove();
+        addForm(user);
 	}
 
 
 	// private functions
-    var changeUser = function(username){
+    var changeUser = function(username,id){
         if(lightdm._username){
             lightdm.cancel_authentication();
         }
         selected_user = username;
+        selected_user_id = id;
         if(selected_user !== null){
             window.start_authentication(selected_user);
         }
-        document.getElementById(selected_user+"-pass").focus();
     }
 	var setupPage = function(){
 		for (var i = 0; i < lightdm.users.length; i++) (function(i){
@@ -55,27 +66,21 @@ var login = (function (lightdm, $) {
             if((imglink === "") || (imglink === null)) {
                 imglink = "assets/profile.png";
             }
-            $("#container").append("<div class='card' id='"+username+"-card'><img src='"+imglink+"' class='profile-img' id='"+username+"-img'><form><input id='"+username+"-pass' placeholder='Password' type='password' tabindex='1' class='password-box'><button type='submit' tabindex='-1' class='submit-button'></form></div>");
+            $("#container").append("<div class='card' id='"+username+"-card'><img src='"+imglink+"' class='profile-img' id='"+username+"-img'><div class='name-box' id='"+username+"-name'>"+dispname+"</div></div>");
             document.getElementById(lightdm.users[i].name+"-card").onclick = function() {
                 if(selected_user !== lightdm.users[i].name){
                     document.getElementById(selected_user+"-pass").value = "";
-                    animUnfocus(selected_user+"-card");
-                    animFocus(lightdm.users[i].name+"-card");
-                    changeUser(lightdm.users[i].name);
-                }
-            }
-            document.getElementById(lightdm.users[i].name+"-pass").onfocus = function() {
-                if(selected_user !== lightdm.users[i].name){
-                    document.getElementById(selected_user+"-pass").value = "";
-                    animUnfocus(selected_user+"-card");
-                    animFocus(lightdm.users[i].name+"-card");
-                    changeUser(lightdm.users[i].name);
+                    animUnfocus(selected_user,selected_user_id);
+                    changeUser(lightdm.users[i].name,i);
+                    animFocus(lightdm.users[i].name);
+                    document.getElementById(selected_user+"-pass").focus();
                 }
             }
 		})(i);
-        changeUser(lightdm.users[0].name);
-		animInit();
-        setTimeout(function(){animFocus(selected_user+"-card");}, 250);
+        changeUser(lightdm.users[0].name,0);
+        animFocus(lightdm.users[0].name);
+		setTimeout(function(){animInit();}, 500);
+        setTimeout(function(){animFocus(selected_user+"-card");}, 750);
 	}
 
     document.getElementById('body').onclick = function(target) {
