@@ -12,11 +12,12 @@
     <div class="bottom-bar">
         <div class="action shutdown" onclick="shutdown();"><i></i>Shut down</div>
         <div class="action reboot" onclick="restart();"><i></i>Restart</div>
+        <div class="widget"><span id="clock">00:00</span><i class="settings"></i></div>
     </div>
     <script src="assets/mock.js"></script>
     <script src="assets/jquery-2.1.0.min.js"></script>
     <script src="assets/login.js"></script>
-    <script src="assets/clock.js"></script>
+    <script src="assets/widget.js"></script>
     <script type="text/javascript">
         function shutdown(){
             $("#overlay").css('visibility', 'visible');

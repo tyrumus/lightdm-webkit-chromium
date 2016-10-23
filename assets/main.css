@@ -13,7 +13,7 @@ body {
     font-family: Roboto Regular, Arial, sans-serif;
     font-size: 13px;
     background: #fff;
-    background-image: url(wallpaper.jpg);
+    background-image: url(white.jpg);
     background-position: 50%;
     background-size: cover;
     background-attachment: fixed;
@@ -116,6 +116,19 @@ body {
 .reboot i {
     background-image: url(reboot.png);
 }
+.settings {
+    display: inline-block;
+    position: fixed;
+    margin-right: 5px;
+    margin-left: 10px;
+    margin-top: 3px;
+    width: 15px;
+    height: 15px;
+    background-image: url(settings.png);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .bottom-bar {
     position: fixed;
     bottom: 0;
@@ -130,6 +143,23 @@ body {
     padding: 0 14px;
     box-shadow: 0 -1px 0 rgba(255,255,255,0.1);
     box-sizing: border-box;
+}
+.widget {
+    cursor: default;
+    position: fixed;
+    bottom: 9px;
+    right: 9px;
+    background-color: rgba(0,0,0,0.6);
+    /*background-color: #3871d5; for selection*/
+    border-radius: 3px;
+    padding: 3px;
+    padding-left: 7px;
+    width: 70px;
+    height: 20px;
+}
+#clock {
+    position: relative;
+    bottom: 11px;
 }
 .fade-cover {
     visibility: hidden;
