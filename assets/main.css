@@ -199,6 +199,17 @@ body {
     padding: 15px;
 }
 .widget-entry:hover {background-color: #ebebeb;}
+.log-box {
+    background-color: #fff;
+    color: #000;
+    overflow: auto;
+    overflow-x: auto;
+    height: 300px;
+    width: 300px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
 #clock {
     position: relative;
     bottom: 8px;

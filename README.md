@@ -1,7 +1,7 @@
 # A ChromeOS-style LightDM Webkit Greeter Theme
 
 ### TODO
-- Widget is what allows changing of session
+- None...open an issue for any feature request
 
 ### Install on Ubuntu (though this will work on any platform that supports `lightdm-webkit-greeter`)
 1. Install lightdm and the greeter by `sudo apt-get install lightdm lightdm-webkit-greeter`

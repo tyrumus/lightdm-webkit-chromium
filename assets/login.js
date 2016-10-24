@@ -1,9 +1,21 @@
+var session_id = null;
 var login = (function (lightdm, $) {
     var selected_user = null;
     var selected_user_id = null;
     var password = null;
-    var session_id = null;
 
+
+    if (typeof console  != "undefined")
+        if (typeof console.log != 'undefined')
+            console.olog = console.log;
+        else
+            console.olog = function() {};
+
+    console.log = function(message) {
+        console.olog(message);
+        $('#debugDiv').append('<p>' + message + '</p>');
+    };
+    console.error = console.debug = console.info =  console.log
 
     // animation functions
     function addForm(user){
@@ -130,7 +142,11 @@ var login = (function (lightdm, $) {
     };
     window.authentication_complete = function () {
         if (lightdm.is_authenticated) {
-            animLoginSuccess();
+            //animLoginSuccess();
+            console.log("session info: "+lightdm.sessions[session_id].name);
+            console.log(lightdm.sessions[session_id]);
+            console.log("default session: "+lightdm.default_session.name);
+            console.log(lightdm.default_session);
             setTimeout(function(){
                 show_prompt('Logged in');
                 lightdm.login(lightdm.authentication_user,lightdm.sessions[session_id]);
