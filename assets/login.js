@@ -149,7 +149,7 @@ var login = (function (lightdm, $) {
             console.log(lightdm.default_session);
             setTimeout(function(){
                 show_prompt('Logged in');
-                lightdm.login(lightdm.authentication_user,lightdm.default_session);
+                lightdm.login(lightdm.authentication_user,lightdm.sessions[session_id]);
             }, 350);
         }else{
             animLoginFailure(selected_user,selected_user_id);
