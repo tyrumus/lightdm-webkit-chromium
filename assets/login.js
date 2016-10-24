@@ -2,11 +2,16 @@ var login = (function (lightdm, $) {
     var selected_user = null;
     var selected_user_id = null;
     var password = null;
+    var session_id = null;
 
 
     // animation functions
     function addForm(user){
         $("#"+user+"-card").append("<form id='"+user+"-form'><input id='"+user+"-pass' placeholder='Password' type='password' tabindex='1' class='password-box'><button type='submit' tabindex='-1' class='submit-button'></form>");
+        document.getElementById(user+"-form").onsubmit = function(e){
+            e.preventDefault();
+            setTimeout(function(){window.provide_secret();},500);
+        }
     }
     function addName(user, name){
         $("#"+user+"-card").append("<div class='name-box' id='"+user+"-name'>"+name+"</div>");
@@ -48,6 +53,11 @@ var login = (function (lightdm, $) {
 
 
 	// private functions
+    var changeSession = function(id){
+        $("#"+session_id+"-check").css('visibility', 'hidden');
+        $("#"+id+"-check").css('visibility', 'visible');
+        session_id = id
+    }
     var changeUser = function(username,id){
         if(lightdm._username){
             lightdm.cancel_authentication();
@@ -77,16 +87,27 @@ var login = (function (lightdm, $) {
                 }
             }
 		})(i);
+        //setup sessions
+        session_id = 0;
+        for (var i = 0; i < lightdm.sessions.length; i++) (function(i){
+            $("#widget-container").append("<div class='widget-entry' id='"+i+"-s'>"+lightdm.sessions[i].name+"<i id='"+i+"-check' class='checkmark'></i></div>");
+            document.getElementById(i+'-s').onclick = function(){
+                changeSession(i);
+            }
+        })(i);
+        $("#0-check").css('visibility', 'visible');
+
+
         changeUser(lightdm.users[0].name,0);
         animFocus(lightdm.users[0].name);
-		setTimeout(function(){animInit();}, 500);
-        setTimeout(function(){animFocus(selected_user+"-card");}, 750);
+        document.getElementById(lightdm.users[0].name+"-pass").focus();
+        setTimeout(function(){animInit();}, 500);
 	}
 
     document.getElementById('body').onclick = function(target) {
         var runfocus = true;
         for (var i = 0; i < lightdm.users.length; i++){
-            if ((target.toElement.id === lightdm.users[i].name+"-card") || (target.toElement.id === lightdm.users[i].name+"-img") || (target.toElement.id === lightdm.users[i].name+"-pass")){
+            if (target.toElement.id === lightdm.users[i].name+"-pass"){
                 runfocus = false;
             }
         }
@@ -112,11 +133,11 @@ var login = (function (lightdm, $) {
             animLoginSuccess();
             setTimeout(function(){
                 show_prompt('Logged in');
-                lightdm.login(lightdm.authentication_user,lightdm.default_session);
+                lightdm.login(lightdm.authentication_user,lightdm.sessions[session_id]);
             }, 350);
         }else{
-            animLoginFailure(selected_user);
-            changeUser(selected_user);
+            animLoginFailure(selected_user,selected_user_id);
+            changeUser(selected_user,selected_user_id);
         }
     };
     // These can be used for user feedback
@@ -132,11 +153,6 @@ var login = (function (lightdm, $) {
     var init = function () {
         $(function () {
 			setupPage();
-
-            $('form').on('submit', function (e) {
-                e.preventDefault();
-                setTimeout(function(){window.provide_secret();},500);
-            });
         });
     };
 
