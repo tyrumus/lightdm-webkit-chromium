@@ -1,7 +1,11 @@
 # A ChromeOS-style LightDM Webkit Greeter Theme
 
+<<<<<<< HEAD
 ### TODO
 - None...open an issue for any feature request
+=======
+Please post feature requests in Issues. I will get back ASAP and add them if they stay true to Chromium OS's design. After all, this is a clone.
+>>>>>>> master
 
 ### Install on Ubuntu (though this will work on any platform that supports `lightdm-webkit-greeter`)
 1. Install lightdm and the greeter by `sudo apt-get install lightdm lightdm-webkit-greeter`
