@@ -4,19 +4,6 @@ var login = (function (lightdm, $) {
     var selected_user_id = null;
     var password = null;
 
-
-    if (typeof console  != "undefined")
-        if (typeof console.log != 'undefined')
-            console.olog = console.log;
-        else
-            console.olog = function() {};
-
-    console.log = function(message) {
-        console.olog(message);
-        $('#debugDiv').append('<p>' + message + '</p>');
-    };
-    console.error = console.debug = console.info =  console.log
-
     // animation functions
     function addForm(user){
         $("#"+user+"-card").append("<form id='"+user+"-form'><input id='"+user+"-pass' placeholder='Password' type='password' tabindex='1' class='password-box'><button type='submit' tabindex='-1' class='submit-button'></form>");
@@ -100,15 +87,16 @@ var login = (function (lightdm, $) {
             }
 		})(i);
         //setup sessions
-        session_id = 0;
         for (var i = 0; i < lightdm.sessions.length; i++) (function(i){
             $("#widget-container").append("<div class='widget-entry' id='"+i+"-s'>"+lightdm.sessions[i].name+"<i id='"+i+"-check' class='checkmark'></i></div>");
             document.getElementById(i+'-s').onclick = function(){
                 changeSession(i);
             }
+            if(lightdm.sessions[i].key === lightdm.default_session.key){
+                session_id = i;
+                $("#"+i+"-check").css('visibility', 'visible');
+            }
         })(i);
-        $("#0-check").css('visibility', 'visible');
-
 
         changeUser(lightdm.users[0].name,0);
         animFocus(lightdm.users[0].name);
@@ -142,14 +130,10 @@ var login = (function (lightdm, $) {
     };
     window.authentication_complete = function () {
         if (lightdm.is_authenticated) {
-            //animLoginSuccess();
-            console.log("session info: "+lightdm.sessions[session_id].name);
-            console.log(lightdm.sessions[session_id]);
-            console.log("default session: "+lightdm.default_session.name);
-            console.log(lightdm.default_session);
+            animLoginSuccess();
             setTimeout(function(){
                 show_prompt('Logged in');
-                lightdm.login(lightdm.authentication_user,lightdm.default_session);
+                lightdm.login(lightdm.authentication_user,lightdm.sessions[session_id].key);
             }, 350);
         }else{
             animLoginFailure(selected_user,selected_user_id);
