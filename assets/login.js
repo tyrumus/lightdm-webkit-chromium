@@ -87,16 +87,17 @@ var login = (function (lightdm, $) {
             }
 		})(i);
         //setup sessions
+        session_id = 0;
         for (var i = 0; i < lightdm.sessions.length; i++) (function(i){
             $("#widget-container").append("<div class='widget-entry' id='"+i+"-s'>"+lightdm.sessions[i].name+"<i id='"+i+"-check' class='checkmark'></i></div>");
             document.getElementById(i+'-s').onclick = function(){
                 changeSession(i);
             }
-            if(lightdm.sessions[i].key === lightdm.default_session.key){
+            if(lightdm.sessions[i].key === lightdm.default_session){
                 session_id = i;
-                $("#"+i+"-check").css('visibility', 'visible');
             }
         })(i);
+        $("#"+session_id+"-check").css('visibility', 'visible');
 
         changeUser(lightdm.users[0].name,0);
         animFocus(lightdm.users[0].name);
