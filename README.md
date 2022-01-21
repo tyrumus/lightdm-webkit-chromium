@@ -1,5 +1,7 @@
 # A ChromeOS-style LightDM Webkit Greeter Theme
 
+**Unmaintained. I no longer use LightDM. Feel free to fork.**
+
 [Install it!](https://github.com/legostax/lightdm-webkit-chromium/wiki/Installation)
 
 ## Features
